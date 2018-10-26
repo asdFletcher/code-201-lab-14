@@ -11,22 +11,22 @@ function fakeData() {
   testCart.push(test1);
   testCart.push(test2);
   testCart.push(test3);
-  //console.log('testCart: ', testCart);
+  // console.log('testCart: ', testCart);
 
   // stringify
   var stringyFakeData = JSON.stringify(testCart);
-  //console.log('stringyFakeData: ', stringyFakeData);
+  // console.log('stringyFakeData: ', stringyFakeData);
 
   //add fake data to localStorage
   localStorage.setItem('fakeData', stringyFakeData);
 
   // retrieve fake data from localStorage
   var retrievedFakeData = localStorage.getItem('fakeData');
-  //console.log('retrievedFakeData: ', retrievedFakeData);
+  // console.log('retrievedFakeData: ', retrievedFakeData);
 
   // parse data
   var parsed = JSON.parse(retrievedFakeData);
-  //console.log('parsed: ', parsed);
+  // console.log('parsed: ', parsed);
 }
 
 fakeData();
@@ -73,10 +73,10 @@ function showCart() {
 
   // get the table
   var table = document.getElementsByTagName('tbody')[0];
-  console.log('table, ', table);
+  // console.log('table, ', table);
 
   for (var i = 0; i < testCart.length; i++){
-    console.log('testCart[i]: ', testCart[i]);
+    // console.log('testCart[i]: ', testCart[i]);
 
     var trEl = document.createElement('tr');
     
@@ -136,8 +136,9 @@ function removeItemFromCart(event) {
   }
 
   // Save the cart back to local storage
-  var stringyFakeData = JSON.stringify(testCart);
-  localStorage.setItem('fakeData', stringyFakeData);
+  var newCart = JSON.stringify(testCart);
+  // console.log('newCart: ', newCart);
+  localStorage.setItem('fakeData', newCart);
 
   // TODO: Re-draw the cart table
 
