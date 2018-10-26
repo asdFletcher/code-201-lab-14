@@ -2,8 +2,28 @@
 
 'use strict';
 
-// Set up an empty cart for use on this page.
-var cart = new Cart([]);
+// Set up a cart for use on this page.
+var cart;
+
+// if localData has no existing info create new cart
+if (localStorage.getItem('localData') === null){
+  cart = new Cart([]);
+
+} else {
+  // otherwise populate it with the existing cart items
+  var cartItems = JSON.parse(localStorage.getItem('localData'));
+  cart = new Cart(cartItems);
+
+  // and update the preview
+  updateCounter();
+}
+
+
+// var Product = function(filePath, name) {
+//   this.filePath = filePath;
+//   this.name = name;
+//   Product.allProducts.push(this);
+// };
 
 // var Product = function(filePath, name) {
 //   this.filePath = filePath;
@@ -49,15 +69,30 @@ function handleSubmit(event) {
 function addSelectedItemToCart() {
 
   // TODO: suss out the item picked from the select list
-  var item = event.target.items.value;
+
+  var productName = event.target.items.value;
+
+  var selectedProduct;
+  for (var i = 0; i < Product.allProducts.length; i++){
+    // console.log('test');
+    
+    if (productName === Product.allProducts[i].name){
+      // console.log('match');
+      selectedProduct = Product.allProducts[i];
+    }
+  }
+
+
   // TODO: get the quantity
   var quantity = event.target.quantity.value;
-  console.log(item);
-  console.log(quantity);
-  var newCartItem = new CartItem(item, quantity);
+  // console.log(selectedProduct);
+  // console.log(quantity);
 
   // TODO: using those, add one item to the Cart
-  cart.items.push(newCartItem);
+  cart.addItem(selectedProduct, quantity);
+
+  console.log('cart: ', cart);
+
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
@@ -71,7 +106,9 @@ function updateCounter() {
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   var selectElement = document.getElementById('cartContents');
-  var itemName = cart.items[cart.items.length-1].product;
+
+  var itemName = cart.items[cart.items.length-1].product.name;
+
   var itemQuantity = cart.items[cart.items.length-1].quantity;
 
   var p = document.createElement('p');
@@ -89,4 +126,5 @@ catalogForm.addEventListener('submit', handleSubmit);
 
 // Before anything else of value can happen, we need to fill in the select
 // drop down list in the form.
+
 populateForm();
