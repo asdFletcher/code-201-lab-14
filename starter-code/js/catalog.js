@@ -25,6 +25,12 @@ if (localStorage.getItem('localData') === null){
 //   Product.allProducts.push(this);
 // };
 
+// var Product = function(filePath, name) {
+//   this.filePath = filePath;
+//   this.name = name;
+//   Product.allProducts.push(this);
+// };
+
 // On screen load, we call this method to put all of the busmall options
 // (the things in the Product.allProducts array) into the drop down list.
 function populateForm() {
@@ -63,6 +69,7 @@ function handleSubmit(event) {
 function addSelectedItemToCart() {
 
   // TODO: suss out the item picked from the select list
+
   var productName = event.target.items.value;
 
   var selectedProduct;
@@ -85,6 +92,7 @@ function addSelectedItemToCart() {
   cart.addItem(selectedProduct, quantity);
 
   console.log('cart: ', cart);
+
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
@@ -98,7 +106,9 @@ function updateCounter() {
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   var selectElement = document.getElementById('cartContents');
+
   var itemName = cart.items[cart.items.length-1].product.name;
+
   var itemQuantity = cart.items[cart.items.length-1].quantity;
 
   var p = document.createElement('p');
